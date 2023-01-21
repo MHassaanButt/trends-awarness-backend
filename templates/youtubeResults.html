@@ -1,0 +1,271 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block styles %}
+
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='youtube.css')}}">
+<link rel="stylesheet" href="{{url_for('.static', filename='bootstrap.min.css')}}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+<script src="{{url_for('.static',filename='bootstrap.min.js')}}"></script>
+<script src="{{url_for('.static',filename='jquery-3.4.1.slim.min.js')}}"></script>
+<script src="{{url_for('.static',filename='popper.min.js')}}"></script>
+
+<style>
+    .card-you-cus{
+        max-height: 440px;
+        min-height: 440px;
+        max-width: 100%;
+        min-width: 100%;
+       
+        box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.4);
+        border-radius: 10px;
+        margin: 2px;
+        margin-bottom: 10px;
+        padding: 10px;
+        
+    }
+
+    .block-with-text {
+        overflow: hidden;
+        position: relative;
+        max-height:100px;
+        text-align: justify;
+        margin-right: -1em;
+        padding-right: 1em;
+      }
+      .block-with-text:before {
+        content: '...';
+        position: absolute;
+        right: 0;
+        bottom: 0;
+      }
+      .block-with-text:after {
+        content: '';
+        position: absolute;
+        right: 0;
+        width: 1em;
+        height: 1em;
+        margin-top: 0.2em;
+        background: white;
+      }
+
+    .card-you-cus .open{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+
+    .el-row{
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .el-row .icon-row{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 0 4px;
+    }
+
+    .el-row h3 a{
+        margin-left: 5px;
+        text-align: center;
+    }
+
+    .main-container{
+        border-left: 1px solid rgba(0,0,0,0.5);
+        border-right: 1px solid rgba(0,0,0,0.5);
+        border-top: 1px solid rgba(0,0,0,0.5);
+        padding: 10px;
+        border-radius: 8px;
+       
+    }
+    .navHeader{
+        font-size: large;
+        margin-top: 8px;
+        padding-top: 5px;
+        
+    }
+    .nav-item{
+        float: right;
+        margin-right: 90px;
+    }
+
+    .navCus{  
+        margin-left: 85%;
+        font-size: large;
+        color:rgb(254, 254, 254);"
+    }
+    
+
+
+
+
+
+</style>
+
+    
+{% endblock %}
+
+{% block content %}
+
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-fixed-top" style="width:100%"  >
+        <a class="navbar-brand navHeader" href="/index">Social Media Analytics</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse navCus" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto" >
+              <li class="nav-item">
+                <a class="nav-link" style="color: rgb(255, 255, 255);" href="/logout">Logout</a>
+              </li>
+          </ul>
+        </div>
+      </nav>
+
+
+
+
+      
+
+
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col main">
+            <h1 class="page-header">{{data['query']}} Youtube Videos Data</h1>
+            <br>
+                <div class="row">
+                    {% for count in data.vid_id %}
+                    <div class="col-4">
+                        <div class="card card-you-cus">
+                            <div class="row">
+                                <div class="col" style="max-height: 50%; min-height: 40%; padding-top: 8px;">
+                                    <span class="open"><a href="{{data.Link[count]}}"><img class="img-responsive"
+                                        src="{{data.Thumbnail[count]}}"
+                                        style="height: 120px;width:200px; align-items: center;"
+                                        alt="img"></a></span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col block-with-text" style="padding-top: 2px;">
+                                    <h2 style="text-align: center; color: #191970; text-decoration: underline; font-size: 2rem;">{{data.Title[count]}}</h2>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col">
+                                    <h5 style="text-align: center; color: gray"> <i>Published Date:</i> {{data.pbN[count]}}</h5>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col " style="max-height: 35%; min-height: 35%; padding-top: 2px; padding-bottom: 6px;">
+                                    <div class="row el-row">
+                                        <div class="col-6">
+                                            <div class="row icon-row">
+                                                <div class="col-3" >
+                                                    <i style="text-align: right;" class="fa-sharp fa-solid fa-eye fa-2xl"></i>
+                                                </div>
+                                                <div class="col-9">
+                                                    <h3 style="font-size: 1.6rem;">
+                                                        {{data.Views[count]}}
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="row icon-row">
+                                                <div class="col-3">
+                                                    <i style="text-align: right;" class="fa-solid fa-user fa-2xl"></i>
+                                                </div>
+                                                <div class="col-9">
+                                                    <h3 style="font-size: 1.6rem; ">
+                                                        {{data.Author[count]}}
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="row el-row">
+                                        
+        
+                                        <div class="col">
+                                            <h3 style="text-align: center;"><a style="font-size: 2rem;" href="{{url_for('youtubeComments',url=data.vid_sh_link[count])}}">Click To Open</a></h3>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            
+                            <!-- <div class="row">
+                                <div class="col-6">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            
+                                        </div>
+                                        <div class="col-6">
+                                            
+                                        </div>
+                                    </div>
+    
+                                </div>
+                                <div class="col-6">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <i  class="fa-sharp fa-solid fa-eye fa-2xl"></i>
+                                        </div>
+                                        <div class="col-8">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div> -->
+                            
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            
+            
+
+            <!-- <h2 class="sub-header">Section title</h2> -->
+            <!-- <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6 mx-auto">
+                        <p>img...</p>
+                    </div>
+                    <div class="col-md-6 mx-auto">
+                        <p>img...</p>
+                    </div>
+                    <div class="col-md-6 mx-auto">
+                        <p>img...</p>
+                    </div>
+                    <div class="col-md-6 mx-auto">
+                        <p>img...</p>
+                    </div>
+                </div>
+            </div> -->
+
+            
+           
+        </div>
+    </div>
+
+    {% endblock %}

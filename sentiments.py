@@ -75,40 +75,6 @@ class Sentimment_Intensity_Analyzer():
         else:
             pass
         return df
-
-    # def polarity_to_text_blob(self, blob):
-    #     if (blob.sentiment.polarity > 0.1):
-    #         return 'pos'
-    #     elif(blob.sentiment.polarity <= 0.1 and blob.sentiment.polarity >= -0.05):
-    #         return 'neu'
-    #     else:
-    #         return 'neg'
-
-    # def textblob_sentimental(self, df,  **kwargs):
-    #     text_len = []
-    #     for text in df.text_clean:
-    #         tweet_len = len(text.split())
-    #         text_len.append(tweet_len)
-    #     df['text_len'] = text_len
-    #     df = df[df['text_len'] > 4]
-    #     sentiments_blob = []
-    #     for tweet in df.text_clean:
-    #         blob = TextBlob(tweet)
-    #         sentiments_blob.append(self.polarity_to_text_blob(blob))
-    #     df['sentiment_blob'] = sentiments_blob
-    #     print("Distribution of Tweets Sentiments using Textblob: \n",
-    #           df['sentiment_blob'].value_counts(), "\n")
-    #     texts_blob_pos = " ".join(
-    #         sentiment for sentiment in df[df['sentiment_blob'] == 'pos']['text_clean'])
-    #     texts_blob_neg = " ".join(
-    #         sentiment for sentiment in df[df['sentiment_blob'] == 'neg']['text_clean'])
-    #     stopwords = stop_words()
-    #     wordcloud_blob_pos = WordCloud(width=800, stopwords=stopwords, height=400, max_font_size=200, max_words=50, collocations=False,
-    #                                    background_color='black').generate(texts_blob_pos)
-    #     wordcloud_blob_neg = WordCloud(width=800, stopwords=stopwords, height=400, max_font_size=200,
-    #                                    max_words=50, collocations=False, background_color='black').generate(texts_blob_neg)
-    #     return wordcloud_blob_pos, wordcloud_blob_neg, texts_blob_pos, texts_blob_neg, df
-
     def polarity_to_text(self, vds_txt, **kwargs):
         if (vds_txt.get('compound') >= 0.05):
             return 'pos'
@@ -117,67 +83,6 @@ class Sentimment_Intensity_Analyzer():
         else:
             return 'neg'
     
-    def pre_senti_yt(self, df, **kwargs):
-        # We apply all the three custom functions to the raw text of the tweets
-        texts_new = []
-        for t in df.Description:
-            texts_new.append(self.remove_spam(self.remove_mult_spaces(self.filter_chars(
-                self.clean_hashtags(self.strip_all_entities(self.strip_emoji(t)))))))
-        df['text_clean'] = texts_new
-        # Moreover, we also make all the tweets to lower case.
-        if df.shape[0] > 0:
-            df['text_clean'] = df['text_clean'].str.lower()
-        else:
-            pass
-        return df
-
-    def vds_sentimental_yt(self, df, **kwargs):
-        vds = SentimentIntensityAnalyzer()
-        sentiments_vds = []
-        for tweet in df.text_clean:
-            vds_txt = vds.polarity_scores(tweet)
-            sentiments_vds.append(self.polarity_to_text(vds_txt))
-        df['sentiments_vds'] = sentiments_vds
-        print("Distribution of Tweets Sentiments using VADER: \n",
-              df['sentiments_vds'].value_counts(), "\n")
-        stopwords = stop_words()
-        vds_pos = " ".join(
-            sentiment for sentiment in df[df['sentiments_vds'] == 'pos']['text_clean'])
-        vds_neg = " ".join(
-            sentiment for sentiment in df[df['sentiments_vds'] == 'neg']['text_clean'])
-        if len(vds_pos) > 0:
-            wordcloud_vds_pos = WordCloud(width=800,
-                                          stopwords=stopwords,
-                                          height=400,
-                                          max_font_size=200,
-                                          max_words=50,
-                                          collocations=False,
-                                          background_color='black').generate(vds_pos)
-        else:
-            wordcloud_vds_pos = WordCloud(width=800,
-                                          stopwords=stopwords,
-                                          height=400,
-                                          max_font_size=200,
-                                          max_words=50,
-                                          collocations=False,
-                                          background_color='black').generate('no_tweet_found')
-        if len(vds_neg) > 0:
-            wordcloud_vds_neg = WordCloud(width=800,
-                                          stopwords=stopwords,
-                                          height=400,
-                                          max_font_size=200,
-                                          max_words=50,
-                                          collocations=False,
-                                          background_color='black').generate(vds_neg)
-        else:
-            wordcloud_vds_neg = WordCloud(width=800,
-                      stopwords=stopwords,
-                      height=400,
-                      max_font_size=200,
-                      max_words=50,
-                      collocations=False,
-                      background_color='black').generate('no_tweet_found')
-        return wordcloud_vds_pos, wordcloud_vds_neg, vds_pos, vds_neg, df
 
 
     def vds_sentimental(self, df, **kwargs):

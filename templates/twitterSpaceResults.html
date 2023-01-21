@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='dashboard.css')}}">
+
+{% endblock %}
+
+{% block content %}
+
+
+<div class="container-fluid">
+
+    <div class="row">
+
+        <div class="col">
+            <h1 class="page-header-cus" style="text-align: center;">Availabe Twitter Spaces</h1>
+
+            <!-- <h2 class="sub-header">Section title</h2> -->
+            <!-- <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6 mx-auto">
+                        <p>img...</p>
+                    </div>
+                    <div class="col-md-6 mx-auto">
+                        <p>img...</p>
+                    </div>
+                    <div class="col-md-6 mx-auto">
+                        <p>img...</p>
+                    </div>
+                    <div class="col-md-6 mx-auto">
+                        <p>img...</p>
+                    </div>
+                </div>
+            </div> -->
+
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col">
+
+
+                        <table class="table table-striped table-bordered" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Likes</th>
+                                    <th>Retweets</th>
+                                    <th>Space Link</th>
+                                    <th>Link</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for count in data.tweet_id %}
+                                <tr>
+                                    
+                                    <td>
+                                        {% for name in data.UserScreenName[count] %}
+                                        {{name}}
+                                        {% endfor %}
+                                    </td>
+                                    <td>
+                                        {% for noun in data.date[count] %}
+                                        {{noun}}
+                                        {% endfor %}
+                                    </td>
+                                    <td>
+                                        {% for verb in data.time[count] %}
+                                        {{verb}}
+                                        {% endfor %}
+                                    </td>
+                                    
+                                    <td>
+                                        {{data.Likes[count]}}
+                                    </td>
+                                    <td>
+                                        {{data.Retweets[count]}}
+                                    </td>
+                                    <td>
+                                        <a href={{url_for('spaceshow',url=data.slinks[count])}}>Open</a>
+                                    </td>
+                                    <td>
+                                        <a href="{{data.splink[count]}}">Twitter</a>
+                                    </td>
+
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        {% endblock %}

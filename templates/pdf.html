@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('.static', filename='bootstrap.min.css')}}">
+    <script src="{{url_for('.static',filename='bootstrap.min.js')}}"></script>
+    <script src="{{url_for('.static',filename='bootstrap.min.js')}}"></script>
+    <script src="{{url_for('.static',filename='bootstrap.min.js')}}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        h1{
+            color:blue;
+            font-size: 25px;
+            text-align: center;
+        }
+        hr{
+            border: 1px solid blue;
+
+        }
+        .per{
+            font-size: 18px;
+            text-align: left;
+            color: aqua;
+            font-style: italic;
+        }
+    </style>
+    <title>PDF</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>
+                    PERSONAL DETAILS
+                </h1>
+                
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-3">
+                Person: 
+            </div>
+            <div class="col-9 per">
+                {{Author}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                Title: 
+            </div>
+            <div class="col-9 per">
+                {{title}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                Url: 
+            </div>
+            <div class="col-9 per">
+                {{Watch_url}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                Personality Group: 
+            </div>
+            <div class="col-9 per">
+                POLITICS
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                Published Date: 
+            </div>
+            <div class="col-9 per">
+                {{Date}}
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col">
+                <h1>
+                    VISUAL REPRESENTATION
+                </h1>
+                
+            </div>
+        </div>
+        <hr>
+        
+        <div class="row">
+            <div class="col">
+                <h1>
+                    CONTENT
+                </h1>
+                
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col">
+                {{trans}}
+            </div>
+        </div>
+        <hr>
+        <div class="row " style="margin-bottom: 10px;">
+            <div class="col-4">
+                <div class="card card-sent" style="text-align: center;">
+                    <div class="card-header bg-success ">
+                        <h4 style="color: white;">POSITIVE</h4>
+                    </div>
+                    <div class="card-body">
+                        <h2 class="text-success">
+                            {{Pos}}%
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card card-sent" style="text-align: center;">
+                    <div class="card-header bg-danger">
+                        <h4 style="color: white;">NEGATIVE</h4>
+                    </div>
+                    <div class="card-body">
+                        <h2 class="text-danger">
+                            {{Neg}}%
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card card-sent" style="text-align: center;">
+                    <div class="card-header bg-primary ">
+                        <h4 style="color: white;">NEUTRAL</h4>
+                    </div>
+                    <div class="card-body">
+                        <h2 class="text-primary">
+                            {{Neu}}%
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+    
+                
+                
+    
+
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,232 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}
+Dashboard
+{% endblock %}
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='dashboard.css')}}">
+<link rel="stylesheet" href="../static/main.css">
+<link rel="stylesheet" href="{{url_for('.static', filename='bootstrap.min.css')}}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+<script src="{{url_for('.static',filename='bootstrap.min.js')}}"></script>
+<script src="{{url_for('.static',filename='jquery-3.4.1.slim.min.js')}}"></script>
+<script src="{{url_for('.static',filename='popper.min.js')}}"></script>
+<style>
+    body{
+  font: 15px helvetica,arial,freesans,clean,sans-serif;
+  margin: 20px auto;    
+  text-align: center;
+}
+#waveform{
+  background: #f0f0f0;
+  margin-top: 15px;
+  margin: 10px;
+}
+
+.card-cus {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 600px;
+        box-shadow: 4px 4px 8px rgba(20, 20, 20, 0.8);
+        border-radius: 10px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+.card-show{
+        width: 100%;
+        height: 600px;
+        box-shadow: 4px 4px 8px rgba(20, 20, 20, 0.8);
+        border-radius: 10px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding: 10px;
+}
+
+    .trans {
+        color: black;
+        padding: 10px;
+        font-size: 20px;
+        font-family: 'Noto Nastaliq Urdu', serif;
+    }
+
+h1{
+  margin: 5px;
+}
+h2{
+  font-size: 14px;
+  margin: 0px;
+}
+h3{
+    font-size: 14px;
+    margin: 10px;
+}
+
+
+button{
+  cursor: pointer;
+  font-size: 20px;
+  margin-top: 10px;
+  padding: 10px;
+}
+button:active{
+  outline: none;
+  border-top: 4px solid #eee;
+  border-bottom: 2px solid #777;
+}
+button:focus{
+  outline: none;
+}
+
+.card-you-cus{
+        
+        box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.4);
+        border-radius: 10px;
+        margin: 2px;
+        margin-bottom: 10px;
+        padding: 10px;
+        
+    }
+  
+.styleText{
+  border-radius: 5px;
+  box-shadow: 4px 4px 8px rgba(20, 20, 20, 0.8);
+  border-radius: 10px;
+  margin-top: 10px;
+  
+}
+</style>
+
+
+{% endblock %}
+{% block content %}
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"
+    integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="{{url_for('.static', filename='all.min.css')}}">
+<link rel="stylesheet" href="{{url_for('.static', filename='bootstrap.min.css')}}">
+<script src="{{url_for('.static',filename='bootstrap.min.js')}}"></script>
+<script src="{{url_for('.static',filename='bootstrap.min.js')}}"></script>
+<script src="{{url_for('.static',filename='bootstrap.min.js')}}"></script>
+​<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+<script src="https://unpkg.com/wavesurfer.js"></script>
+
+<div class="container">
+    <div class="row">
+      <div class="col" style="text-align: center;">
+        <h2 style="font-size: 50px;">Twitter Space</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col" style="text-align: right";>
+          <button class="btn btn-primary" type="submit" >
+                  <a href="{{url_for('spaceRep')}}" style="font-size: 15px; color:aliceblue; text-decoration: none;"><i class="fa-solid fa-floppy-disk"></i>  SAVE</a>
+          </button>
+      </div>
+  </div>
+    <div class="row">
+        <div class="col-6" style="text-align: center;">
+            <div class="card card-show">
+                <div class="row">
+                    <div class="col" style="align-items: center;">
+                        <img src="../static/spaces.png" alt="" style="height: 200px; width: 200px; align-items: center; text-align: center; padding-top: 15px;">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col" style="align-items: center;">
+                        <h2 style="font-size: 26px;">{{data['name']}}</h2>
+                        <hr>
+                        <div class="row">
+                          <div class="col" style="text-align: center;">
+                            <h3 style="font-size: 22px; color: rgba(24, 141, 187, 0.925);">{{data['uName']}}</h3>
+                        </div>
+                        <hr>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h3 style="font-size: 20px; color: rgba(89, 93, 95, 0.925);">{{data['ttime']}}</h3>
+                            </div>
+                            <div class="col">
+                              <h3 style="font-size: 20px; color: rgba(89, 93, 95, 0.925);">{{data['tdate']}}</h3>
+                          </div>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+                
+                
+
+                <div class="row">
+                    <div class="col">
+                        <div id="waveform"></div>
+                        <div id="minimap"></div>
+                        <button class="btn btn-primary btn-lg btn-block" style="margin: 5px;" onclick="wavesurfer.playPause()">
+                            <i class="glyphicon glyphicon-play"></i>
+                            Play/Pause
+                        </button>
+                    </div>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+          <div class="col-6 styleText">
+              
+                <div class="card card-show trans"> -->
+                    <div style='font-family: Noto Nastaliq Urdu, serif;padding: 10px;font-size:16px;position:relative;top:13px;height:550px;border:0px solid black;color:black;overflow-y:scroll;text-align: right;padding-right: 10px;'  class="css-typing"></div>
+                </div>
+          </div>
+          
+        
+        </div>
+    </div>
+</div>
+
+
+  <script>
+    var wavesurfer = WaveSurfer.create({
+    container: '#waveform',
+    waveColor: '#c0c4c1',
+    progressColor: '#a9afb0',
+    barHeight: 1.4 
+});
+
+var minimap;
+wavesurfer.on('ready', function () {
+  minimap = wavesurfer.initMinimap({
+    height: 30,
+    waveColor: '#000',
+    progressColor: '#999',
+    cursorColor: '#727c7d',
+    barHeight: 1.4
+  });
+});
+
+console.log("{{data['spaces']}}")
+wavesurfer.load("{{ url_for('static', filename='space.wav') }}")
+</script>
+
+<script>
+  var str="{{data['trans']}}"
+  var spans = '<span>' + str.split('').join('</span><span>') + '</span>';
+  console.log('spans',spans)
+      $(spans).hide().appendTo('.css-typing').each(function (i) {
+          $(this).delay(100 * i).css({
+              display: 'inline',
+              opacity: 0
+          }).animate({
+              opacity: 1
+          }, 100);
+      });
+      </script>
+  
+{% endblock %}
+
+  

@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='dashboard.css')}}">
+
+{% endblock %}
+
+{% block content %}
+
+
+<div class="container-fluid">
+    
+    <div class="row">
+        
+        <div class="col" style="text-align: center;">
+            <h1 class="page-header-cus"> Retrieved Tweets with Sentiments</h1>
+
+            <!-- <h2 class="sub-header">Section title</h2> -->
+            <!-- <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6 mx-auto">
+                        <p>img...</p>
+                    </div>
+                    <div class="col-md-6 mx-auto">
+                        <p>img...</p>
+                    </div>
+                    <div class="col-md-6 mx-auto">
+                        <p>img...</p>
+                    </div>
+                    <div class="col-md-6 mx-auto">
+                        <p>img...</p>
+                    </div>
+                </div>
+            </div> -->
+            
+
+            <div class="container">
+                <div class="row">
+                    {% for count in data.tweet_id %}
+                    <div class="col-4" >
+                        <div class="card card-twitter-custom">
+                            <div class="row logo-row">
+                            
+                                <div class="col-logo">
+                                    <img src="static/user.svg" style="height: 20px; width:20px">
+                                </div>
+                                
+                                    
+                            </div>
+                            <div class="row username-row">
+                                <div class="col col-logo-name">
+                                    <h4>{% for UserScreenName in data.UserScreenName[count] %}
+                                        {{UserScreenName}}
+                                        {% endfor %}</h4>
+                                    
+                                </div>
+                            </div>
+                            
+                           
+                            <div class="row align-items-center">
+                                <div class="col tweetText">
+                                    <p class="tweetParagraph">
+                                        {{data.orginal_tweet[count]}}
+                                    </p>
+                                    
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row row-result">
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <div class="row">
+                                                <div class="col-2">
+                                                   <img class='ic' src="static/likesIC.svg">
+                                                </div>
+                                                <div class="col-4">
+                                                    <h6 class="text-info-cus">
+                                                        {% if data.Likes[count]=='' %}
+                                                              0
+                                                        {% else %}
+                                                        {{data.Likes[count]}}
+                                                        {% endif %}
+                                                        </h6>
+                                                </div>
+                                                <div class="col-2">
+                                                    <img class='ic' src="static/retIC.svg">
+                                                </div>
+                                                <div class="col-4">
+                                                    <h6 class="text-info-cus">
+                                                        {% if data.Retweets[count]=='' %}
+                                                              0
+                                                        {% else %}
+                                                       {{ data.Retweets[count]}}
+                                                        {% endif %}
+
+                                                    </h6>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-5">
+                                            <div class="row">
+                                                <div class="col-8">
+                                                    <h6 class="text-info-sent {% if data.sentiments_vds[count] == 'neu' %} blu {% elif  data.sentiments_vds[count] == 'pos'%} gree {% else %} redc {% endif %}">
+                                                        <!--class="{% if data.sentiments_vds[count] == 'neu' %} blu {% elif  data.sentiments_vds[count] == 'pos'%} gree {% else %} redc {% endif %}"-->
+                                                        {% if data.sentiments_vds[count] == 'neu' %}
+                                                            Neutral
+                                                            {% elif  data.sentiments_vds[count] == 'pos'%}
+                                                            Positive
+                                                            {% else %}
+                                                            Negative
+                                                            {% endif %}
+                                                    
+                                                    </h6>
+                                                </div>
+                                                <div class="col-4" >
+                                                    <a href={{data.Image_link[count][0]}}><img class='ic' src="static/imgIC.svg"></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        
+                       
+
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            
+        </div>
+    </div>
+
+    {% endblock %}

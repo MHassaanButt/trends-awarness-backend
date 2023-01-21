@@ -1,0 +1,134 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}
+Twitter Space
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='dashboard.css')}}">
+<link rel="stylesheet" href="../static/main.css">
+{% endblock %}
+
+{% block content %}
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+        aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">User Profling Using Social Media</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li class="active"><a href="/index">Dashboard</a></li>
+        <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+      </ul>
+      <form class="navbar-form navbar-right">
+        <input type="text" class="form-control" placeholder="Search...">
+      </form>
+    </div>
+  </div>
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 col-md-2 sidebar-cus">
+      <ul class="nav nav-sidebar-cus">
+        <li><a href="/dashboard">Twitter<span class="sr-only">(current)</span></a></li>
+        <!-- <li><a href="#">Reports</a></li> -->
+        <li><a href="/analytics">Analytics</a></li>
+        <li class="active"><a href="/twitterSpace">Twitter Space</a></li>
+        <!-- <li><a href="#">Export</a></li> -->
+        <!-- </ul>
+      <ul class="nav nav-sidebar">
+        <li><a href="">Nav item</a></li>
+        <li><a href="">Nav item again</a></li>
+        <li><a href="">One more nav</a></li>
+        <li><a href="">Another nav item</a></li>
+        <li><a href="">More navigation</a></li>
+      </ul>
+      <ul class="nav nav-sidebar">
+        <li><a href="">Nav item again</a></li>
+        <li><a href="">One more nav</a></li>
+        <li><a href="">Another nav item</a></li>
+      </ul> -->
+    </div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+      <div class="row" style="margin-bottom: 40px;">
+
+      </div>
+      <!-- <h2 class="sub-header">Section title</h2> -->
+      <div class="row">
+        <div class="col-md-8" style="display: flex; justify-content: center;">
+          <img src="static/space.png" alt="">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-8" style="padding-top: 40px;">
+          <form class="form-scrape" method="POST" action="/twitterSpace">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="InputDate">Since</label>
+                  <input type="date" class="form-control" id="inputDateSp" aria-describedby="dateHelp" name="since"
+                    placeholder="" required>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="InputDate">Until</label>
+                  <input type="date" class="form-control" id="inputDateSp" aria-describedby="dateHelp" name="until"
+                    placeholder="">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="InputWords">Words</label>
+                  <input type="text" class="form-control" id="InputTextS" aria-describedby="emailHelp" name="words"
+                    placeholder="filter:spaces" disabled>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="InputLanguage">Language</label>
+                  <select class="form-control" aria-label="Default select example" name="language">
+                    <option selected value="en">English</option>
+                    <option value="fr">French</option>
+                    <option value="ur">Urdu</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+
+
+
+            <button class="btn btn-lg btn-primary btn-block " type="submit">Search</button>
+          </form>
+        </div>
+        <div class="col-md-4 grid-center">
+          <div class="row ">
+            <img src="static/png-clipart-twitter-twitter-thumbnail.png" width="200" height="200" class="img-responsive"
+              alt="Generic placeholder thumbnail">
+            <h4>Twitter Scraper</h4>
+            <span class="text-muted">Tweeter Space Scraper</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div> <!-- /container -->
+
+  </div>
+</div>
+{% endblock %}

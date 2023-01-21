@@ -1,0 +1,64 @@
+
+.starter-template {
+  padding: 30px 10px;
+  text-align: center;
+}
+
+
+/* Changing I have made */
+
+.starter-template .avatar{
+  height: 400px;
+  width: 400px;
+}
+
+
+.card-deck .card img{
+  height: 100px;
+  width: 120px;
+}
+
+
+/* Cards*/
+
+.cardsRow{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction:row;
+  margin-top: 90px;
+  
+}
+
+
+.imag{
+  height: 110px;
+  width: 110px;
+  border-radius: 20px;
+}
+
+
+.container .starter-template .box{
+  padding: 10px;
+  height: 200px;
+  width: 200px;
+  border-radius: 15px;
+  background-color: hsl(0, 0%, 100%);
+  box-shadow: 0 4px 8px rgba(50, 50, 50, 0.7);
+
+}
+
+.h1{
+  font-size: 19px;
+  font-family: Outfit;
+  position:fixed; 
+  left:80px; 
+  top:20px;
+  
+}
+
+.container .starter-template .box a{
+  text-decoration: none;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  color: black;
+}

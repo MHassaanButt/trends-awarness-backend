@@ -1,0 +1,254 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block styles %}
+
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='youtube.css')}}">
+<link rel="stylesheet" href="{{url_for('.static', filename='bootstrap.min.css')}}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+<script src="{{url_for('.static',filename='bootstrap.min.js')}}"></script>
+<script src="{{url_for('.static',filename='jquery-3.4.1.slim.min.js')}}"></script>
+<script src="{{url_for('.static',filename='popper.min.js')}}"></script>
+
+<style>
+    .card-you-cus{
+        max-height: 300px;
+        min-height: 300px;
+        max-width: 100%;
+        min-width: 100%;
+       
+        box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.4);
+        border-radius: 10px;
+        margin: 2px;
+        margin-bottom: 10px;
+        padding: 10px;
+        
+    }
+
+    .block-with-text {
+        overflow: hidden;
+        position: relative;
+        max-height:100px;
+        text-align: justify;
+        margin-right: -1em;
+        padding-right: 1em;
+      }
+      .block-with-text:before {
+        content: '...';
+        position: absolute;
+        right: 0;
+        bottom: 0;
+      }
+      .block-with-text:after {
+        content: '';
+        position: absolute;
+        right: 0;
+        width: 1em;
+        height: 1em;
+        margin-top: 0.2em;
+        background: white;
+      }
+
+    .card-you-cus .open{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+
+    .el-row{
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .el-row .icon-row{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 0 4px;
+    }
+
+    .el-row h3 a{
+        margin-left: 5px;
+        text-align: center;
+    }
+
+    .main-container{
+        border-left: 1px solid rgba(0,0,0,0.5);
+        border-right: 1px solid rgba(0,0,0,0.5);
+        border-top: 1px solid rgba(0,0,0,0.5);
+        padding: 10px;
+        border-radius: 8px;
+       
+    }
+    .navHeader{
+        font-size: large;
+        margin-top: 8px;
+        padding-top: 5px;
+        
+    }
+    .nav-item{
+        float: right;
+        margin-right: 90px;
+    }
+
+    .navCus{  
+        margin-left: 85%;
+        font-size: large;
+        color:rgb(254, 254, 254);"
+    }
+    
+
+
+    .profilePic{
+        width: 120px;
+        height:120px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    form button{
+        background-color: white;
+        border: 0px white;
+    }
+
+
+</style>
+
+    
+{% endblock %}
+
+{% block content %}
+
+
+
+
+
+
+      
+
+
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col main">
+            <h1 class="page-header">Youtuber Profiling</h1>
+            <br>
+                <div class="row">
+                    {% for count in data.id %}
+                    <div class="col-4">
+                        <div class="card card-you-cus">
+                            <div class="row">
+                                <div class="col" style="text-align: -webkit-center;">
+                                    <img class='profilePic' src="static/profiles/{{data.Profile[count]}}.jpg" alt="" srcset="">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row" style="text-align:center;">
+                                <div class="col">
+                                    <h3>{{data.Name[count]}}</h3>
+                                </div>
+                                
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-3" style="text-align: center;">
+                                    <a href="{{data.Youtube[count]}}"><i style="font-size: 30px; color: red;" class="fa-brands fa-youtube "></i></a>   
+                                </div>
+                                <div class="col-2" style="text-align: center;">
+                                    <a href="{{data.Facebook[count]}}"><i style="font-size: 30px; color: rgb(9, 21, 77);" class="fa-brands fa-square-facebook "></i></a>   
+                                </div>
+                                <div class="col-2" style="text-align: center;">
+                                    <a href="{{data.Twitter[count]}}"><i style="font-size: 30px; color: rgb(20, 99, 145);" class="fa-brands fa-twitter "></i></a>  
+                                </div>
+                                <div class="col-5">
+                                    <div class="row">
+                                        <div class="col">
+                                            <form action="{{ url_for('profileSearcher',text=data.Name[count]) }}" method="POST">
+                                                <div class="row">
+                                                    <div class="col" style="text-align: center;">
+                                                        <button type="submit" name="submit_button_p" value="Slow"><i style="font-size: 30px; color: rgb(10, 10, 10);" class="fa-solid fa-magnifying-glass "></i></button>
+                                                    </div>
+                                                    <div class="col" style="text-align: center;">                
+                                                        <button type="submit" name="submit_button_p" value="Fast"><i style="font-size: 30px; color: rgb(10, 68, 20);" class="fa-solid fa-person-running"></i></button>
+                                                    </div>
+                                                </div>
+                                                
+                                            </form>
+                                        </div>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                
+                                
+                            </div>
+                            
+                            <!-- <div class="row">
+                                <div class="col-6">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            
+                                        </div>
+                                        <div class="col-6">
+                                            
+                                        </div>
+                                    </div>
+    
+                                </div>
+                                <div class="col-6">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <i  class="fa-sharp fa-solid fa-eye fa-2xl"></i>
+                                        </div>
+                                        <div class="col-8">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div> -->
+                            
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            
+            
+
+            <!-- <h2 class="sub-header">Section title</h2> -->
+            <!-- <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6 mx-auto">
+                        <p>img...</p>
+                    </div>
+                    <div class="col-md-6 mx-auto">
+                        <p>img...</p>
+                    </div>
+                    <div class="col-md-6 mx-auto">
+                        <p>img...</p>
+                    </div>
+                    <div class="col-md-6 mx-auto">
+                        <p>img...</p>
+                    </div>
+                </div>
+            </div> -->
+
+            
+           
+        </div>
+    </div>
+
+    {% endblock %}

@@ -1,0 +1,232 @@
+/*
+ * Base structure
+ */
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+
+
+
+/*
+ * Global add-ons
+ */
+
+.sub-header-cus {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+/*
+ * Top navigation
+ * Hide default border to remove 1px line.
+ */
+.navbar-fixed-top-cus {
+  border: 0;
+}
+
+/*
+ * Sidebar
+ */
+
+/* Hide for mobile, show later */
+.sidebar-cus {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .sidebar-cus {
+    position: fixed;
+    top: 51px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    /* Scrollable contents if viewport is shorter than content. */
+    background-color: #f5f5f5;
+    border-right: 1px solid #eee;
+  }
+}
+
+/* Sidebar navigation */
+.nav-sidebar-cus {
+  margin-right: -21px;
+  /* 20px padding + 1px border */
+  margin-bottom: 20px;
+  margin-left: -20px;
+}
+
+.nav-sidebar-cus>li>a {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.nav-sidebar-cus>.active>a,
+.nav-sidebar-cus>.active>a:hover,
+.nav-sidebar-cus>.active>a:focus {
+  color: #fff;
+  background-color: #428bca;
+}
+
+
+/*
+ * Main content
+ */
+
+.main {
+  padding: 20px;
+}
+
+@media (min-width: 768px) {
+  .main {
+    padding-right: 40px;
+    padding-left: 40px;
+  }
+}
+
+.main .page-header {
+  margin-top: 0;
+  text-align: center;
+}
+
+.container .table {
+  margin-left: 0;
+  /* text-align: center; */
+}
+
+/*
+ * Placeholder dashboard ideas
+ */
+
+.placeholders {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.placeholders h4 {
+  margin-bottom: 0;
+}
+
+.placeholder {
+  margin-bottom: 20px;
+}
+
+.placeholder img {
+  display: inline-block;
+  border-radius: 50%;
+}
+
+.container {
+  width: 1520px;
+}
+
+.card-twitter-custom {
+  max-height: 400px;
+  min-height: 400px;
+  padding: 10px;
+  border: 1px solid gray;
+  border-radius: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+
+}
+
+.tweetParagraph {
+  text-align: justify;
+  padding: 5px;
+  font-size: 14px;
+  margin: auto;
+}
+
+.ic {
+  height: 25px;
+  width: 25px;
+  padding: 3px;
+  display: flex;
+  justify-content: center;
+}
+
+.tweetText {
+  max-height: 210px;
+  min-height: 210px;
+}
+
+.text-info-cus {
+  max-height: 45px;
+  min-height: 45px;
+  text-align: center;
+  vertical-align: center;
+  padding-top: 4px;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.text-info-sent {
+  text-align: center;
+  vertical-align: center;
+  padding-top: 4px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.col-logo {
+  height: 30px;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  border: 1px solid black;
+}
+
+.logo-row {
+  justify-content: center;
+  margin-bottom: 4px;
+  max-height: 40px;
+  min-height: 40px;
+}
+
+.username-row {
+  margin: auto;
+  min-height: 54px;
+  max-height: 54px;
+}
+
+.col-logo-name {
+  text-align: center;
+}
+
+.col-logo-name h4 {
+
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.row-result {
+  margin: auto;
+  max-height: 70px;
+  min-height: 70px;
+  padding-bottom: 10px;
+}
+
+
+.blu {
+  color: blue;
+}
+
+.gree {
+  color: green;
+}
+
+.redc {
+  color: red;
+}
+
+.cardLink {
+  text-decoration: null;
+  color: black;
+}
+

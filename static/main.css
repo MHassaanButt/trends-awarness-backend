@@ -1,0 +1,15 @@
+.custom-container {
+  min-height: calc(80vh - 71px);
+  display: grid;
+  place-items: center;
+  margin-top: 71px;
+}
+
+.center{
+    text-align: center;
+}
+
+.grid-center{
+  display: grid;
+  place-items: center;
+}

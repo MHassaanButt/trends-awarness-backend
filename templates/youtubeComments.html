@@ -1,0 +1,323 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+​
+{% block title %}
+Comments
+{% endblock %}
+​
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='youtubeComments.css')}}">
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"
+    integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="{{url_for('.static', filename='all.min.css')}}">
+<link rel="stylesheet" href="{{url_for('.static', filename='bootstrap.min.css')}}">
+<script src="{{url_for('.static',filename='bootstrap.min.js')}}"></script>
+<script src="{{url_for('.static',filename='bootstrap.min.js')}}"></script>
+<script src="{{url_for('.static',filename='bootstrap.min.js')}}"></script>
+​
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+​
+​
+<style>
+    .card-cus {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        width: 100%;
+        height: 400px;
+        box-shadow: 4px 4px 8px rgba(20, 20, 20, 0.8);
+        border-radius: 10px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+​
+    .trans {
+        color: black;
+        padding: 10px;
+        font-size: 20px;
+        font-family: 'Noto Nastaliq Urdu', serif;
+    }
+​
+    .card-sent {
+        justify-content: center;
+        border-radius: 10px;
+        box-shadow: 4px 4px 8px rgba(20, 20, 20, 0.8);
+    }
+​
+    .card-sent h2 {
+        font-size: 20px;
+    }
+​
+    .para {
+        text-align: right;
+        font-size: 20px;
+        padding: 2px;
+​
+    }
+​
+    .card-style {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 95%;
+        padding: 5px;
+        box-shadow: 0 4px 8px rgba(20, 20, 20, 0.8);
+        border-radius: 10px;
+        margin: auto;
+    }
+​
+​
+    .keywords {
+        color: rgb(40, 121, 187);
+        text-align: justify;
+        font-size: 15px;
+        padding: 8px;
+​
+    }
+</style>
+​
+​
+{% endblock %}
+​
+{% block content %}
+​
+​
+<div class="container">
+    <div class="row">
+        <div class="col" >
+            <h1 style="text-align: center; margin-top: 10px; margin-bottom: 10px;">{{data['title']}}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-primary" type="submit">
+                    <a href="{{url_for('pdfGen',url=data['URL'])}}" style="text-decoration: none; color: white; font-size: 20px;"><i class="fa-solid fa-floppy-disk"></i>  SAVE</a>
+            </button>
+        </div>
+        
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="card card-cus embed-responsive embed-responsive-16by9">
+​
+                <video  width="450" height="315" controls autoplay >
+                    <source src="{{ url_for('static', filename='playVideo.mp4') }}" type="video/mp4">
+                    
+                </video>
+            </div>
+        </div>
+        <div class="col-6">
+            <!-- <div id='transc' style='border:3px solid black' class="card card-cus trans"> -->
+                <div style='font-family: Noto Nastaliq Urdu, serif;font-size:16px;position:relative;top:13px;height:397px;border:3px solid black;color:black;overflow-y:scroll;text-align: right;padding-right: 10px;'  class="css-typing"></div>
+</div>
+​
+            <!-- </div> -->
+        <!-- </div> -->
+    </div>
+    <div class="row">
+        <div class="col">
+            <h2>PERSONAL</h2>
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: 10px;">
+        <div class="col-4">
+            <div class="card card-sent" style="text-align: center;">
+                <div class="card-header bg-primary ">
+                    <h4 style="color: white;">AUTHOR</h4>
+                </div>
+                <div class="card-body">
+                    <h2 class="text-primary">
+                        {{data['author']}}
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card card-sent" style="text-align: center;">
+                <div class="card-header bg-primary">
+                    <h4 style="color: white;">Published On</h4>
+                </div>
+                <div class="card-body">
+                    <h2 class="text-primary">
+                        {{data['Date']}}
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card card-sent" style="text-align: center;">
+                <div class="card-header bg-primary ">
+                    <h4 style="color: white;">CATEGORY</h4>
+                </div>
+                <div class="card-body">
+                    <h2 class="text-primary">
+                        POLITICAL
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="row" style="margin-top: 10px; margin-bottom:10px;">
+            <div class="col">
+                <div class="card card-style">
+                    <h2 style="text-align: center;">Keywords</h2>
+                    <hr>
+                    <div class="keywords">
+                        {% for key in data['keyList'] %}
+                            #{{key}}
+                        {% endfor %}
+                    </div>
+                    <hr>
+                    <h2 style="text-align: center;">Description</h2>
+                    <hr>
+                    <p class="para">
+                        {{data['desc']}}
+                    </p>
+​
+                </div>
+            </div>
+        </div> -->
+    </div>
+    <div class="row">
+        <div class="col">
+            <h2>SENTIMENTS</h2>
+        </div>
+    </div>
+​
+    <div class="row" style="margin-bottom: 10px;">
+        <div class="col-4">
+            <div class="card card-sent" style="text-align: center;">
+                <div class="card-header bg-success ">
+                    <h4 style="color: white;">POSITIVE</h4>
+                </div>
+                <div class="card-body">
+                    <h2 class="text-success">
+                        {{data['Pos']}}%
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card card-sent" style="text-align: center;">
+                <div class="card-header bg-danger">
+                    <h4 style="color: white;">NEGATIVE</h4>
+                </div>
+                <div class="card-body">
+                    <h2 class="text-danger">
+                        {{data['Neg']}}%
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card card-sent" style="text-align: center;">
+                <div class="card-header bg-primary ">
+                    <h4 style="color: white;">NEUTRAL</h4>
+                </div>
+                <div class="card-body">
+                    <h2 class="text-primary">
+                        {{data['Neu']}}%
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="row" style="margin-top: 10px; margin-bottom:10px;">
+            <div class="col">
+                <div class="card card-style">
+                    <h2 style="text-align: center;">Keywords</h2>
+                    <hr>
+                    <div class="keywords">
+                        {% for key in data['keyList'] %}
+                            #{{key}}
+                        {% endfor %}
+                    </div>
+                    <hr>
+                    <h2 style="text-align: center;">Description</h2>
+                    <hr>
+                    <p class="para">
+                        {{data['desc']}}
+                    </p>
+​
+                </div>
+            </div>
+        </div> -->
+    </div>
+​
+​
+    <div class="row">
+        <div class="col main">
+            <div class="container">
+                <h1 class="page-header"> Comments</h1>
+                {% for count in data.cmnt_id %}
+                <div class="row">
+                    <div class="col">
+                        <div class="card cardcus">
+                            <div class="row" style="padding: 5px;">
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col-1 col-logo">
+                                            <div class="circle">
+                                                <h2>{{data.User_Name[count][0]}}</h2></i>
+                                            </div>
+​
+                                        </div>
+                                        <div class="col-11 col-logo-name">
+                                            <h2>{{data.User_Name[count]}}</h2>
+​
+                                        </div>
+                                    </div>
+​
+                                    <hr>
+                                    <h4 class="comnt">
+                                        {{data.Comments[count]}}
+                                    </h4>
+                                </div>
+​
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+​
+            <!-- <h2 class="sub-header">Section title</h2> -->
+            <!-- <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6 mx-auto">
+                        <p>img...</p>
+                    </div>
+                    <div class="col-md-6 mx-auto">
+                        <p>img...</p>
+                    </div>
+                    <div class="col-md-6 mx-auto">
+                        <p>img...</p>
+                    </div>
+                    <div class="col-md-6 mx-auto">
+                        <p>img...</p>
+                    </div>
+                </div>
+            </div> -->
+​
+        </div>
+    </div>
+    <script>
+    var str="{{data['trans']}}"
+    var spans = '<span>' + str.split('').join('</span><span>') + '</span>';
+    console.log('spans',spans)
+        $(spans).hide().appendTo('.css-typing').each(function (i) {
+            $(this).delay(100 * i).css({
+                display: 'inline',
+                opacity: 0
+            }).animate({
+                opacity: 1
+            }, 100);
+        });
+        </script>
+    
+       
+        
+        
+    {% endblock %}

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+     <style>
+        *{
+            margin: 40;
+            margin-right: 40;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            align-items: center;
+            justify-content: center;
+            margin-top: 8vh;
+            background-color: rgb(255, 252, 252);
+            font-family: sans-serif;
+            text-align: center;
+        }
+        .table-container{
+            padding: 0 10%;
+            margin:  auto ;
+        }
+        .heading{
+            font-size: 40px;
+            text-align: center;
+            color: black;
+            margin-bottom: 40px ;
+        }
+        .table{
+          position:absolute;
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .table thead{
+            background-color: rgb(101, 122, 241);
+        }
+        .table thead tr th{
+            font-family: 14px;
+            font-weight: 600;
+            letter-spacing: 0.35px;
+            color: #3D3B3B;
+            opacity: 1;
+            padding: 12px;
+            vertical-align: top;
+            border: 1px solid #dee2e685;
+        }
+        .table tbody tr td{
+            font-size: 14px;
+            letter-spacing: 0.35;
+            font-weight: normal;
+            color:#3d3b3b;
+            background-color: #BDD4F8;
+            padding: 8px;
+            text-align: center;
+            border: 1px solid #dee2e685;
+        }
+        .table .open{
+          font-size: 14px;
+          font-weight: bold;
+          letter-spacing: 0.35px;
+          color: blue;
+        }
+        .table tbody tr td .btn{
+          width: 130px;
+          text-decoration: none;
+          line-height: 35px;
+          display: inline-block;
+          background-color: rgb(102, 123, 238);
+          font-weight: medium;
+          vertical-align: middle;
+          user-select: none;
+          border: 1px solid transparent;
+          font-size: 14px;
+          opacity: 1;
+        }
+        @media(max-width: 768px){
+          .table thead{
+            display: none;
+          }
+          .table, .table tbody, .table tr, .table td{
+            display: block;
+            width: 100%;
+          }
+        }
+     </style>
+</head>
+<body>
+    <div class="table.container">
+       <h1 class="heading" >Youtube Results</h1>
+        <table class="table" >
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Channel Name</th>
+                <th>Keywords</th>
+                <th>Description</th>
+                <th>Views</th>
+                <th>Rating</th>
+                <th>Thumbnails</th>
+                <th>Links</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>....</td>
+                <td>....</td>
+                <td>....</td>
+                <td>.....</td>
+                <td>.....</td>
+                <td>.....</td>
+                <td>.....</td>
+                <td data-label="thumbnails"><span class="open"><img src="url" alt="img"></span></td>
+                <td data-label=""><a href="" class="btn">Link</a></td>
+                </tr>
+              <tr>
+                <td>....</td>
+                <td>....</td>
+                <td>....</td>
+                <td>.....</td>
+                <td>.....</td>
+                <td>.....</td>
+                <td>.....</td>
+                <td data-label="thumbnails"><span class="open"><img src="url" alt="img"></span></td>
+                <td data-label=""><a href="" class="btn">Link</a></td>
+              </tr>
+              <tr>
+                <td>....</td>
+                <td>....</td>
+                <td>....</td>
+                <td>.....</td>
+                <td>.....</td>
+                <td>.....</td>
+                <td>.....</td>
+                <td data-label="thumbnails"><span class="open" ></span><img src="url" alt="img"></span></td>
+                <td data-label=""><a href="" class="btn">Link</a></td>
+              </tr>
+              <tr>
+                <td>....</td>
+                <td>....</td>
+                <td>....</td>
+                <td>.....</td>
+                <td>.....</td>
+                <td>.....</td>
+                <td>.....</td>
+                <td data-label="thumbnails"><span class="open"><img src="url" alt="img"></span></td>
+                <td data-label=""><a href="" class="btn">Link</a></td>
+              </tr>
+              <tr>
+                <td>....</td>
+                <td>....</td>
+                <td>....</td>
+                <td>.....</td>
+                <td>.....</td>
+                <td>.....</td>
+                <td>.....</td>
+                <td data-label="thumbnails"><span class="open"><img src="url" alt="img"></span></td>
+                <td data-label=""><a href="" class="btn">Link</a></td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+</body>

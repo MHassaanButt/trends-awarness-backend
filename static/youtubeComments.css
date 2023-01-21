@@ -1,0 +1,37 @@
+.cardcus{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 1px solid #3d3b3b;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+    border-radius: 5px;
+}
+
+.circle{
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    border: 1px solid blue;
+    color: blue;
+    background-color: aqua;
+    
+}
+
+.circle h2{
+    font-size: 30px;
+    text-align: center;
+}
+
+.col-logo{
+    display: flex;
+    justify-content: end;
+    align-items: right;
+    padding-left: 10px;
+}
+
+.col-logo-name{
+    margin-top: 8px;
+}
+
+.comnt{
+    margin-left: 90px;
+}

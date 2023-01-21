@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}
+Youtube
+{% endblock %}
+   
+{% block styles %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+<style>
+    .container{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        margin-top: 230px;
+    }
+
+    
+    
+    .imgcl img{
+        width: 280px;
+        height: 180px;
+    }
+
+    .searchContainer{
+        padding: 20px;
+        margin-top: 30px;
+    }
+
+    .searchContainer input{
+        padding:2px;
+        width: 480px;
+        height: 35px;
+        border: 2px solid rgb(187, 34, 42);
+        border-radius: 15px;
+        color: rgb(187, 34, 42);
+        font-size: 15px;
+        padding-left: 12px;
+        
+    }
+    
+
+    .searchContainer button{
+        height: 35px;
+        width:35px;
+        border-radius: 50%;
+        border: 2px solid rgb(187, 34, 42);
+        color: rgb(187, 34, 42);
+        background-color: white;
+    }
+
+    
+    .searchContainer a{
+        text-decoration: none;
+        color: rgb(187, 34, 42); ;
+    }
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="imgcl">
+        <img src="static/yt.png" alt="">
+    </div>
+
+    <div class="searchContainer">
+        <div class="row">
+            <div class="col-1" style="text-align: center;" >
+                <button> <a href="/index"><i class="fa fa-arrow-left"></i></a></button>
+            </div>
+            <div class="col-10">        
+                <form action="/youtube" method="POST">
+                    <div class="row formCus">
+                        <div class="col-10 " style="width: 100%; text-align: center;">
+                            <input type="text" placeholder="Search..." name="search">
+                        </div>
+                        <div class="col-1 " style="text-align: center;">
+                            <button type="submit" name="submit_button" value="Slow" ><i class="fas fa-search"></i></button>
+                        </div>
+                        <div class="col-1 " style="text-align: center;">
+                            <button type="submit" name="submit_button" value="Quick"><i class="fa-solid fa-person-running"></i></button>
+                        </div>
+                    </div>
+                    
+                    
+                </form>
+            </div>
+            <div class="col-1" style="text-align: center;">
+                <button> <a href="/profiles"><i class="fa-solid fa-user"></i></a></button>
+            </div>
+
+        </div>
+       
+        
+    </div>
+</div><!-- /.container -->
+{% endblock %}

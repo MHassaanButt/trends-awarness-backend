@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}
+Demo App
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{url_for('.static', filename='starter-template.css')}}">
+
+{% endblock %}
+
+{% block content %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="container">
+
+  <div class="starter-template">
+    <img src="static/logos-01.png"  alt="Avatar" class="avatar" />
+
+    <br>
+    <br>
+    <br>
+    <h1> SOCIAL MEDIA ANALYTICS</h1>
+    
+      <div class='cardsRow'>
+        <a href='/dashboard'>
+        <div class="box" style="margin-left:200px ;">
+          <div class="img">
+            <img src="static/twitt.png" alt="" class="imag">
+          </div>
+          <h4>Twitter</h4>
+        </a>
+        </div>
+        <a href='/youtube'>
+        <div class="box" style="margin-right:0px ;">
+          <div class="img" >
+            <img src="static/youtube.jpg" alt="" class="imag">
+          </div>
+          <h4>Youtube</h4>
+        </a>
+        
+          
+        </div>
+        <a href='#'>
+        <div class="box" style="margin-right:200px ;">
+          <div class="img" >
+            <img src="static/fb.png" alt="" class="imag" style="height: 110px">
+          </div>
+          <h4>Facebook</h4>
+        </a>
+          
+        </div>
+      </div>
+      
+
+      
+      
+      
+      
+      
+      
+      
+    
+   
+  </div>
+
+</div><!-- /.container -->
+{% endblock %}
