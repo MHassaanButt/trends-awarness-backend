@@ -1,0 +1,12 @@
+__pycache__/
+audios/
+outputs/
+videos/
+spaces/
+chunksSpace/
+new_ch/
+.ipynb_checkpoints/
+
+*.mp4
+*.wav
+
