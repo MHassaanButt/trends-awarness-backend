@@ -23,12 +23,4 @@ flask_login
 #nltk.download('punkt')
 #python -m spacy download en_core_web_sm
 webdriver_manager
-SpeechRecognition
-pytube
-moviepy
-pydub
-sklearn
-python-docx
-docx2pdf
 email_validator
-twspace-dl
