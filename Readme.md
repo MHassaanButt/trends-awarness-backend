@@ -1,10 +1,10 @@
-# Media Analytics
+# Trends Awarness
 
 ## Installation Guidance
 
-1. fmpeg installation on window (https://www.geeksforgeeks.org/how-to-install-ffmpeg-on-windows/)
-2. Create an conda environment i.e. conda create -n media
-3. Activate conda env i.e. conda activate media
+1. Install Miniconda
+2. Create an conda environment i.e. conda create -n trends
+3. Activate conda env i.e. conda activate trends
 
 ```python
 pip install -r requirements.txt
