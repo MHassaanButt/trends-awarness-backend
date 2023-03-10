@@ -22,10 +22,12 @@ import subprocess
 from datetime import datetime
 import json, requests, glob, shutil,os
 from pathlib import Path
+from flask_cors import CORS
 
 
 app = Flask(__name__, static_folder='static')
 app.config['SECRET_KEY'] = 'Thisissupposedtobesecret!'
+CORS(app)
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////home/hassaan/Documents/user_profiling_for_social_media/twitter_app/database.db'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -118,21 +120,20 @@ def login():
     return render_template('login.html', form=form)
 
 
-@app.route('/signup', methods=['GET', 'POST'])
+@app.route('/signup', methods=['POST'])
 def signup():
-    form = RegisterForm()
+    data = request.get_json()
+    hashed_password = generate_password_hash(data['password'], method='sha256')
+    new_user = User(
+        username=data['firstName'] + ' ' + data['lastName'],
+        email=data['email'],
+        password=hashed_password
+    )
+    db.session.add(new_user)
+    db.session.commit()
 
-    if form.validate_on_submit():
-        hashed_password = generate_password_hash(
-            form.password.data, method='sha256')
-        new_user = User(username=form.username.data,
-                        email=form.email.data, password=hashed_password)
-        db.session.add(new_user)
-        db.session.commit()
-
-        return redirect(url_for('login'))
-
-    return render_template('signup.html', form=form)
+    response = {'message': 'Signup successful'}
+    return jsonify(response)
 
 
 @app.route('/tweet_scrape', methods=['GET', 'POST'])
@@ -163,10 +164,8 @@ def scaper():
     dict=df.to_dict()
     return render_template('results.html',data=dict) """
     ############################## JUST FOR TESTING####################################
-    tweets = scrape(hashtag=hashtag, words=words, since=since, until=until, from_account=from_account,
-                    to_account=None, mention_account=mention_account, interval=interval, headless=True, display_type=display_type, save_images=False,
-                    proxy=None, save_dir='outputs', lang=language, resume=False, filter_replies=True, proximity=False,  limit=limit,
-                    show_images=False,  geocode=None, minreplies=None, minlikes=None, minretweets=None)
+    
+    tweets = scrape(hashtag=hashtag, words=words, since=since, until=until, interval=interval, headless=True,limit=limit)
 
     mlt = Multi_Tweets_Extraction()
     sentiments = Sentimment_Intensity_Analyzer()
