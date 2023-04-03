@@ -59,8 +59,8 @@ def create_table():
 
 class LoginForm(FlaskForm):
     print("In login form")
-    username = StringField('username', validators=[
-                           InputRequired(), Length(min=4, max=15)])
+    email = StringField('email', validators=[InputRequired(), Email(
+        message='Invalid email'), Length(max=50)])
     password = PasswordField('password', validators=[
                              InputRequired(), Length(min=8, max=80)])
     remember = BooleanField('remember me')
@@ -99,25 +99,24 @@ def analytics():
     return render_template('analytics.html')
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    print('In login')
-    form = LoginForm()
+    data = request.get_json()
+    # print("data", data)
+    hashed_password = generate_password_hash(data['password'], method='sha256')
+    user = User.query.filter_by(email=data['email']).first()
+    
+    if user:
+        print("user",user)
+        if check_password_hash(user.password, hashed_password):
+            response = {'message': 'Login successful'}
+            return jsonify(response)
+        else:
+            response = {'message': 'Invalid password'}
+            return jsonify(response) 
+    response = {'message': 'Invalid emal'}
+    return jsonify(response)      
 
-    if form.validate_on_submit():
-        print('validate_on_submit()')
-        user = User.query.filter_by(username=form.username.data).first()
-        if user:
-            print('in user')
-            if check_password_hash(user.password, form.password.data):
-                print('in check password hash')
-                login_user(user, remember=form.remember.data)
-                return redirect(url_for('index'))
-            else:
-                print("Invalid password")
-        return '<h1>Invalid username or password</h1>'
-
-    return render_template('login.html', form=form)
 
 
 @app.route('/signup', methods=['POST'])
