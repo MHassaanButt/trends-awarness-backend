@@ -102,13 +102,12 @@ def analytics():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     data = request.get_json()
-    # print("data", data)
-    hashed_password = generate_password_hash(data['password'], method='sha256')
+    password = data['password']
     user = User.query.filter_by(email=data['email']).first()
     
     if user:
         print("user",user)
-        if check_password_hash(user.password, hashed_password):
+        if user.password== password:
             response = {'message': 'Login successful'}
             return jsonify(response)
         else:
@@ -122,11 +121,11 @@ def login():
 @app.route('/signup', methods=['POST'])
 def signup():
     data = request.get_json()
-    hashed_password = generate_password_hash(data['password'], method='sha256')
+    password = data['password']
     new_user = User(
         username=data['firstName'] + ' ' + data['lastName'],
         email=data['email'],
-        password=hashed_password
+        password=password
     )
     db.session.add(new_user)
     db.session.commit()
