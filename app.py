@@ -58,7 +58,6 @@ def create_table():
 
 
 class LoginForm(FlaskForm):
-    print("In login form")
     email = StringField('email', validators=[InputRequired(), Email(
         message='Invalid email'), Length(max=50)])
     password = PasswordField('password', validators=[
@@ -106,7 +105,6 @@ def login():
     user = User.query.filter_by(email=data['email']).first()
     
     if user:
-        print("user",user)
         if user.password== password:
             response = {'message': 'Login successful'}
             return jsonify(response)
@@ -170,29 +168,32 @@ def scaper():
     mlt_df = mlt.multi_tweets(tweets)
     df = pd.DataFrame(mlt_df)
     pre_clean_df = sentiments.pre_senti(df)
+    temp = pre_clean_df.to_dict(orient='records')
 
+    print("================",temp,"======================")
+    print("================",type(temp),"======================")
     if pre_clean_df.shape[0] > 0:
-        wordcloud_vds_pos, wordcloud_vds_neg, vds_pos, vds_neg, df_vds = sentiments.vds_sentimental(
-            pre_clean_df)
-        print(f'Sample of Negative Tweets',
-              df_vds.text_clean[df_vds['sentiments_vds'] == 'neg'])
-        print(f'Sample of Postive Tweets ',
-              df_vds.text_clean[df_vds['sentiments_vds'] == 'pos'])
+    #     wordcloud_vds_pos, wordcloud_vds_neg, vds_pos, vds_neg, df_vds = sentiments.vds_sentimental(
+    #         pre_clean_df)
+        # print(f'Sample of Negative Tweets',
+        #       df_vds.text_clean[df_vds['sentiments_vds'] == 'neg'])
+        # print(f'Sample of Postive Tweets ',
+        #       df_vds.text_clean[df_vds['sentiments_vds'] == 'pos'])
 
     ## Visulazations ###
-        print(df_vds)
-        df_vds.to_csv('twitterData.csv')
-        dict = df.to_dict('dict')
-        word_cloud_viz(wordcloud_vds_pos)
-        word_cloud_viz(wordcloud_vds_neg,
-                       'WORDCLOUD FOR NEGATIVE TWEETS', "static/wc_neg.png")
-        frequent_words_count(vds_pos)
-        frequent_words_count(
-            vds_neg, 'Top words used in Negative Tweets', "static/freq_neg.png")
-        return render_template('results.html', data=dict)
+        # df_vds.to_csv('twitterData.csv')
+        # dicti = df.to_dict('dict')
+        # word_cloud_viz(wordcloud_vds_pos)
+        # word_cloud_viz(wordcloud_vds_neg,
+        #                'WORDCLOUD FOR NEGATIVE TWEETS', "static/wc_neg.png")
+        # frequent_words_count(vds_pos)
+        # frequent_words_count(
+        #     vds_neg, 'Top words used in Negative Tweets', "static/freq_neg.png")
+        with open("sample.json", "w") as outfile:
+                json.dump(temp, outfile)
+        return tweets
     else:
         return "no data found"
-
 
 @app.route('/dashboard')
 @login_required
