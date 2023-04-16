@@ -23,6 +23,7 @@ from datetime import datetime
 import json, requests, glob, shutil,os
 from pathlib import Path
 from flask_cors import CORS
+from flask import jsonify
 
 
 app = Flask(__name__, static_folder='static')
@@ -131,6 +132,20 @@ def signup():
     response = {'message': 'Signup successful'}
     return jsonify(response)
 
+def convert_to_dict(lst):
+    if not lst:
+        return {}
+    elif len(lst) == 1:
+        return lst[0]
+    else:
+        return {i: lst[i] for i in range(len(lst))}
+
+def handle_non_serializable(obj):
+    if isinstance(obj, spacy.tokens.Span):
+        return {'start': obj.start, 'end': obj.end}
+    raise TypeError('Object of type %s is not JSON serializable' % type(obj))
+
+
 
 @app.route('/tweet_scrape', methods=['GET', 'POST'])
 def scaper():
@@ -169,10 +184,13 @@ def scaper():
     df = pd.DataFrame(mlt_df)
     pre_clean_df = sentiments.pre_senti(df)
     temp = pre_clean_df.to_dict(orient='records')
-
+    temp=convert_to_dict(temp)
     print("================",temp,"======================")
     print("================",type(temp),"======================")
     if pre_clean_df.shape[0] > 0:
+        json_str = json.dumps(temp, default=handle_non_serializable)
+        # json_string = json.dumps(temp)  # serialize dictionary to JSON
+
     #     wordcloud_vds_pos, wordcloud_vds_neg, vds_pos, vds_neg, df_vds = sentiments.vds_sentimental(
     #         pre_clean_df)
         # print(f'Sample of Negative Tweets',
@@ -189,9 +207,9 @@ def scaper():
         # frequent_words_count(vds_pos)
         # frequent_words_count(
         #     vds_neg, 'Top words used in Negative Tweets', "static/freq_neg.png")
-        with open("sample.json", "w") as outfile:
-                json.dump(temp, outfile)
-        return tweets
+        # with open("sample.json", "w") as outfile:
+        #         json.dump(temp, outfile)
+        return jsonify(json_str)
     else:
         return "no data found"
 

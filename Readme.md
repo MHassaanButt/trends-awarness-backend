@@ -9,11 +9,12 @@
 ```python
 pip install -r requirements.txt
 ```
-5. python -m spacy download en_core_web_sm
+5. ```python -m spacy download en_core_web_sm```
 ```python
 python
 import nltk
 nltk.download('stopwords')
 nltk.download('vader_lexicon')
 nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
 ```
