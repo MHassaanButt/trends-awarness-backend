@@ -184,34 +184,38 @@ def scaper():
     df = pd.DataFrame(mlt_df)
     pre_clean_df = sentiments.pre_senti(df)
     temp = pre_clean_df.to_dict(orient='records')
-    temp=convert_to_dict(temp)
-    print("================",temp,"======================")
-    print("================",type(temp),"======================")
-    if pre_clean_df.shape[0] > 0:
-        json_str = json.dumps(temp, default=handle_non_serializable)
-        # json_string = json.dumps(temp)  # serialize dictionary to JSON
+    original_dict = convert_to_dict(temp)
+    print("original dict", original_dict)
+    import re
 
-    #     wordcloud_vds_pos, wordcloud_vds_neg, vds_pos, vds_neg, df_vds = sentiments.vds_sentimental(
-    #         pre_clean_df)
-        # print(f'Sample of Negative Tweets',
-        #       df_vds.text_clean[df_vds['sentiments_vds'] == 'neg'])
-        # print(f'Sample of Postive Tweets ',
-        #       df_vds.text_clean[df_vds['sentiments_vds'] == 'pos'])
+    def clean_tweet_text(text):
+        # Remove mentions
+        text = re.sub(r'@[A-Za-z0-9_]+', '', text)
+        # Remove URLs
+        text = re.sub(r'http\S+', '', text)
+        # Remove non-alphanumeric characters
+        text = re.sub(r'\W+', ' ', text)
+        # Convert to lowercase
+        text = text.lower()
+        # Remove extra spaces
+        text = re.sub(r'\s+', ' ', text).strip()
+        return text
 
-    ## Visulazations ###
-        # df_vds.to_csv('twitterData.csv')
-        # dicti = df.to_dict('dict')
-        # word_cloud_viz(wordcloud_vds_pos)
-        # word_cloud_viz(wordcloud_vds_neg,
-        #                'WORDCLOUD FOR NEGATIVE TWEETS', "static/wc_neg.png")
-        # frequent_words_count(vds_pos)
-        # frequent_words_count(
-        #     vds_neg, 'Top words used in Negative Tweets', "static/freq_neg.png")
-        # with open("sample.json", "w") as outfile:
-        #         json.dump(temp, outfile)
-        return jsonify(json_str)
-    else:
-        return "no data found"
+    cleaned_dict = {}
+    for tweet_id, tweet_data in original_dict.items():
+        cleaned_tweet_data = tweet_data.copy()
+        cleaned_tweet_data['text_clean'] = clean_tweet_text(tweet_data['orginal_tweet'])
+        cleaned_dict[tweet_id] = cleaned_tweet_data
+    # assuming cleaned_dict is your cleaned dictionary
+    json_string = json.dumps(cleaned_dict)
+
+    # you can then return the json string to your frontend
+    return json_string
+
+    # print(cleaned_dict)
+
+
+    # return jsonify(json_data)
 
 @app.route('/dashboard')
 @login_required
