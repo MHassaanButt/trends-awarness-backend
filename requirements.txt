@@ -25,3 +25,4 @@ flask_login
 webdriver_manager
 email_validator
 flask_cors
+vaderSentiment
