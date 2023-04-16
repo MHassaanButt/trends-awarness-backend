@@ -23,8 +23,7 @@ from datetime import datetime
 import json, requests, glob, shutil,os
 from pathlib import Path
 from flask_cors import CORS
-from flask import jsonify
-
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 app = Flask(__name__, static_folder='static')
 app.config['SECRET_KEY'] = 'Thisissupposedtobesecret!'
@@ -207,11 +206,37 @@ def scaper():
         cleaned_tweet_data['text_clean'] = clean_tweet_text(tweet_data['orginal_tweet'])
         cleaned_dict[tweet_id] = cleaned_tweet_data
     # assuming cleaned_dict is your cleaned dictionary
-    json_string = json.dumps(cleaned_dict)
+    # json_string = json.dumps(cleaned_dict)
+ 
 
-    # you can then return the json string to your frontend
-    return json_string
+    def analyze_sentiment(cleaned_dict):
+        analyzer = SentimentIntensityAnalyzer()
+        for _, tweet in cleaned_dict.items():
+            text = tweet["text_clean"]
+            sentiment_scores = analyzer.polarity_scores(text)
+            compound_score = sentiment_scores["compound"]
+            threshold = 0.05
+            if compound_score > threshold:
+                tweet["sentiment"] = "positive"
+            elif compound_score < -threshold:
+                tweet["sentiment"] = "negative"
+            else:
+                tweet["sentiment"] = "neutral"
+        return json.dumps(cleaned_dict)
 
+
+    keys_to_remove = ["names", "nouns", "verbs", "cardinal_digit"]
+    image_key = "Image_link"
+
+    for tweet_id in cleaned_dict:
+        for key in keys_to_remove:
+            del cleaned_dict[tweet_id][key]
+        if cleaned_dict[tweet_id][image_key] == []:
+            cleaned_dict[tweet_id][image_key] = None
+        else:
+            cleaned_dict[tweet_id][image_key] = cleaned_dict[tweet_id][image_key][0]
+    final_tweets=analyze_sentiment(cleaned_dict)
+    return final_tweets
     # print(cleaned_dict)
 
 
