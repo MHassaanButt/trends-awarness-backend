@@ -148,34 +148,19 @@ def handle_non_serializable(obj):
 
 @app.route('/tweet_scrape', methods=['GET', 'POST'])
 def scaper():
-
     form = ScrapeForm()
-    since = form.data.get('since')
-    since = str(since)
-    until = form.data.get('until')
-    until = str(until)
+    since = str(form.data.get('since'))
+    until = str(form.data.get('until'))
     words = form.data.get('words')
     hashtag = form.data.get('hashtag')
-    from_account = form.data.get('from_account')
-    from_account = str(from_account)
-    mention_account = form.data.get('mention_account')
-    mention_account = str(mention_account)
-    limit = form.data.get('limit')
-    limit = int(limit)
-    interval = form.data.get('interval')
-    interval = int(interval)
-    language = form.data.get('language')
-    language = str(language)
-    display_type = form.data.get('display_type')
-    display_type = str(display_type)
+    from_account = str(form.data.get('from_account'))
+    mention_account = str(form.data.get('mention_account'))
+    limit = int(form.data.get('limit'))
+    interval = int(form.data.get('interval'))
+    language = str(form.data.get('language'))
+    display_type = str(form.data.get('display_type'))
 
-    ############################### JUST FOR TESTING ##################################
-    """ df=pd.read_csv('outputs/hashtag_tweets_new.csv')
-    dict=df.to_dict()
-    return render_template('results.html',data=dict) """
-    ############################## JUST FOR TESTING####################################
-    
-    tweets = scrape(hashtag=hashtag, words=words, since=since, until=until, interval=interval, headless=True,limit=limit)
+    tweets = scrape(hashtag=hashtag, words=words, since=since, until=until, interval=interval, headless=True, limit=limit)
 
     mlt = Multi_Tweets_Extraction()
     sentiments = Sentimment_Intensity_Analyzer()
@@ -184,8 +169,6 @@ def scaper():
     pre_clean_df = sentiments.pre_senti(df)
     temp = pre_clean_df.to_dict(orient='records')
     original_dict = convert_to_dict(temp)
-    print("original dict", original_dict)
-    import re
 
     def clean_tweet_text(text):
         # Remove mentions
@@ -201,42 +184,45 @@ def scaper():
         return text
 
     cleaned_dict = {}
-    for tweet_id, tweet_data in original_dict.items():
+    tweet_id = 0
+    for tweet_data in original_dict.values():
         cleaned_tweet_data = tweet_data.copy()
         cleaned_tweet_data['text_clean'] = clean_tweet_text(tweet_data['orginal_tweet'])
         cleaned_dict[tweet_id] = cleaned_tweet_data
-    # assuming cleaned_dict is your cleaned dictionary
-    # json_string = json.dumps(cleaned_dict)
- 
+        tweet_id += 1
 
     def analyze_sentiment(cleaned_dict):
         analyzer = SentimentIntensityAnalyzer()
+        final_tweets = []
         for _, tweet in cleaned_dict.items():
             text = tweet["text_clean"]
             sentiment_scores = analyzer.polarity_scores(text)
             compound_score = sentiment_scores["compound"]
             threshold = 0.05
+            sentiment = ""
             if compound_score > threshold:
-                tweet["sentiment"] = "positive"
+                sentiment = "positive"
             elif compound_score < -threshold:
-                tweet["sentiment"] = "negative"
+                sentiment = "negative"
             else:
-                tweet["sentiment"] = "neutral"
-        return json.dumps(cleaned_dict)
+                sentiment = "neutral"
+            tweet_data = {
+                "tweet_id": tweet["tweet_id"],
+                "UserScreenName": tweet["UserScreenName"],
+                "UserName": tweet["UserName"],
+                "orginal_tweet": tweet["orginal_tweet"],
+                "Likes": tweet["Likes"],
+                "Retweets": tweet["Retweets"],
+                "Image_link": tweet["Image_link"][0] if tweet["Image_link"] else None,
+                "text_clean": tweet["text_clean"],
+                "sentiment": sentiment
+            }
+            final_tweets.append(tweet_data)
+        return json.dumps(final_tweets)
 
-
-    keys_to_remove = ["names", "nouns", "verbs", "cardinal_digit"]
-    image_key = "Image_link"
-
-    for tweet_id in cleaned_dict:
-        for key in keys_to_remove:
-            del cleaned_dict[tweet_id][key]
-        if cleaned_dict[tweet_id][image_key] == []:
-            cleaned_dict[tweet_id][image_key] = None
-        else:
-            cleaned_dict[tweet_id][image_key] = cleaned_dict[tweet_id][image_key][0]
-    final_tweets=analyze_sentiment(cleaned_dict)
+    final_tweets = analyze_sentiment(cleaned_dict)
     return final_tweets
+
     # print(cleaned_dict)
 
 
