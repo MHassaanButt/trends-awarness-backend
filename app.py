@@ -221,6 +221,7 @@ def scaper():
         return json.dumps(final_tweets)
 
     final_tweets = analyze_sentiment(cleaned_dict)
+    print(final_tweets)
     return final_tweets
 
     # print(cleaned_dict)
