@@ -131,6 +131,51 @@ def get_data(card, save_images=False, save_dir=None):
     return tweet
 
 
+# def init_driver(headless=True, proxy=None, show_images=False, option=None, firefox=False, env=None):
+#     """ initiate a chromedriver or firefoxdriver instance
+#         --option : other option to add (str)
+#     """
+
+#     if firefox:
+#         options = FirefoxOptions()
+#         driver_path = geckodriver_autoinstaller.install()
+#     else:
+#         options = ChromeOptions()
+#         driver_path = chromedriver_autoinstaller.install()
+
+#     if headless is True:
+#         print("Scraping on headless mode.")
+#         options.add_argument('--disable-gpu')
+#         options.headless = True
+#     else:
+#         options.headless = False
+#     options.add_argument('log-level=3')
+#     if proxy is not None:
+#         options.add_argument('--proxy-server=%s' % proxy)
+#         print("using proxy : ", proxy)
+#     if show_images == False and firefox == False:
+#         prefs = {"profile.managed_default_content_settings.images": 2}
+#         options.add_experimental_option("prefs", prefs)
+#     if option is not None:
+#         options.add_argument(option)
+
+#     if firefox:
+#         driver = webdriver.Firefox(
+#             options=options, executable_path=driver_path)
+#     else:
+#         driver = webdriver.Chrome(options=options, executable_path=driver_path)
+
+#     driver.set_page_load_timeout(1000)
+#     return driver
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.firefox import GeckoDriverManager
+import geckodriver_autoinstaller
+import chromedriver_autoinstaller
+
+
 def init_driver(headless=True, proxy=None, show_images=False, option=None, firefox=False, env=None):
     """ initiate a chromedriver or firefoxdriver instance
         --option : other option to add (str)
@@ -138,10 +183,11 @@ def init_driver(headless=True, proxy=None, show_images=False, option=None, firef
 
     if firefox:
         options = FirefoxOptions()
-        driver_path = geckodriver_autoinstaller.install()
+        driver_path = GeckoDriverManager().install()
     else:
         options = ChromeOptions()
-        driver_path = chromedriver_autoinstaller.install()
+        options.add_argument('--disable-blink-features=AutomationControlled')
+        driver_path = ChromeDriverManager().install()
 
     if headless is True:
         print("Scraping on headless mode.")
@@ -165,8 +211,10 @@ def init_driver(headless=True, proxy=None, show_images=False, option=None, firef
     else:
         driver = webdriver.Chrome(options=options, executable_path=driver_path)
 
-    driver.set_page_load_timeout(100)
+    driver.set_page_load_timeout(100000)
     return driver
+
+
 
 
 def log_search_page(driver, since, until_local, lang, display_type, words, to_account, from_account, mention_account,
@@ -249,7 +297,7 @@ def get_last_date_from_csv(path):
     return datetime.datetime.strftime(max(pd.to_datetime(df["Timestamp"])), '%Y-%m-%dT%H:%M:%S.000Z')
 
 
-def log_in(driver, env, timeout=20, wait=4):
+def log_in(driver, env, timeout=20, wait=1000):
     email = get_email(env)  # const.EMAIL
     password = get_password(env)  # const.PASSWORD
     username = get_username(env)  # const.USERNAME
@@ -341,7 +389,10 @@ def get_users_follow(users, headless, env, follow=None, verbose=1, wait=2, limit
     """ get the following or followers of a list of users """
 
     # initiate the driver
-    driver = init_driver(headless=headless, env=env, firefox=True)
+    profile_path = r'C:\Users\Usama khan\AppData\Local\Google\Chrome\User'
+# driver = init_driver(profile_path=profile_path)
+
+    driver = init_driver(headless=headless, env=env, firefox=True,profile_path=profile_path)
     sleep(wait)
     # log in (the .env file should contain the username and password)
     # driver.get('https://www.twitter.com/login')

@@ -112,7 +112,7 @@ def scrape(since=None, until=None, words=None, to_account=None, from_account=Non
             # number of tweets parsed
             tweet_parsed = 0
             # sleep
-            sleep(random.uniform(0.5, 1.5))
+            sleep(random.uniform(0.5, 100))
             # start scrolling and get tweets
             driver, data, writer, tweet_ids, scrolling, tweet_parsed, scroll, last_position = \
                 keep_scroling(driver, data, writer, tweet_ids, scrolling,

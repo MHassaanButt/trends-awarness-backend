@@ -160,7 +160,7 @@ def scaper():
     language = str(form.data.get('language'))
     display_type = str(form.data.get('display_type'))
 
-    tweets = scrape(hashtag=hashtag, words=words, since=since, until=until, interval=interval, headless=True, limit=limit)
+    tweets = scrape(hashtag=hashtag, words=words, since=since, until=until, interval=interval, headless=False, limit=limit)
 
     mlt = Multi_Tweets_Extraction()
     sentiments = Sentimment_Intensity_Analyzer()
