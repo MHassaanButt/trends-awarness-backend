@@ -211,7 +211,7 @@ def init_driver(headless=True, proxy=None, show_images=False, option=None, firef
     else:
         driver = webdriver.Chrome(options=options, executable_path=driver_path)
 
-    driver.set_page_load_timeout(100000)
+    driver.set_page_load_timeout(1000000)
     return driver
 
 
